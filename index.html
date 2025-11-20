@@ -147,12 +147,14 @@
             transition: none;
         }
 
-        /* Animasi Border Berdenyut (Pulse) */
-        @keyframes borderPulse {
-            0% { border-image: linear-gradient(to right, #ff69b4, #ffffff, #00ffff) 1; }
-            33% { border-image: linear-gradient(to right, #00ffff, #ff69b4, #ffffff) 1; }
-            66% { border-image: linear-gradient(to right, #ffffff, #00ffff, #ff69b4) 1; }
-            100% { border-image: linear-gradient(to right, #ff69b4, #ffffff, #00ffff) 1; }
+        /* 🌟 Keyframes Animasi Putaran Border Saja (DIGUNAKAN) 🌟 */
+        @keyframes rotateBorderGradient {
+            0% { 
+                border-image: linear-gradient(0deg, #ff69b4, #ffffff, #00ffff) 1; 
+            }
+            100% { 
+                border-image: linear-gradient(360deg, #ff69b4, #ffffff, #00ffff) 1; 
+            }
         }
 
 
@@ -164,18 +166,36 @@
             height: 100%;
             transform-origin: center;
             transform-style: preserve-3d;
+            /* Transformasi Awal */
             transform: rotateY(calc(var(--i) * 36deg)) translateZ(360px); 
+            
             -webkit-box-reflect: below 2px linear-gradient(transparent, transparent, rgba(4, 4, 4, 0.267));
             z-index: 5; 
             
             border-radius: 0; 
             overflow: hidden; 
             border: 4px solid transparent; 
-            border-image: linear-gradient(to right, #ff69b4, #ffffff, #00ffff) 1; 
-            animation: borderPulse 3s infinite alternate; 
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border 0.2s ease-in-out;
+            
+            /* Animasi Border Berputar */
+            animation: rotateBorderGradient 3s linear infinite; 
+            
+            /* Transisi untuk Zoom (Span) */
+            transition: transform 0.3s ease-out, box-shadow 0.2s ease-in-out, border 0.2s ease-in-out;
         }
 
+        /* 🌟 Efek Zoom Diterapkan ke SPAN (Kontainer Border + Foto) 🌟 */
+        .box span:hover {
+            /* Perbesar SPAN, ini akan memperbesar border dan foto sekaligus */
+            transform: rotateY(calc(var(--i) * 36deg)) translateZ(360px) scale(1.1); 
+            
+            animation-play-state: running; /* Tetap putar saat hover */
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.7); /* Tambahkan shadow untuk efek */
+            border: 4px solid transparent;
+            /* Border Image saat hover (opsional, bisa sama/berbeda) */
+            border-image: linear-gradient(to right, #ff0000, #ffff00, #00ff00) 1; 
+            z-index: 999; 
+        }
+        
         .box span img {
             position: absolute;
             top: 0;
@@ -189,17 +209,18 @@
             border-radius: 0; 
             border: none;
             animation: none;
+            /* Hapus transisi zoom di sini, karena zoom sudah di kontainer span */
+            transition: none; 
+            /* Pastikan gambar tidak zoom lagi saat hover di dalamnya */
+            transform: scale(1); 
         }
         
-        .box span:hover,
-        .box span:focus-within {
-             animation-play-state: paused;
-             transform: rotateY(calc(var(--i) * 36deg)) translateZ(360px); 
-             box-shadow: none; 
-             border: 4px solid transparent;
-             border-image: none;
-             z-index: 999; 
-        }
+        /* Hapus efek zoom gambar yang terpisah, karena zoom sudah di kontainer span */
+        /* .box span:hover img {
+            transform: scale(1.1);
+        } */
+
+
         
         /* --- Tombol Navigasi Bawah --- */
         .button-container {
@@ -272,6 +293,14 @@
             border-image: none; 
         }
 
+        /* Animasi Border Berdenyut (Pulse) */
+        @keyframes borderPulse {
+            0% { border-image: linear-gradient(to right, #ff69b4, #ffffff, #00ffff) 1; }
+            33% { border-image: linear-gradient(to right, #00ffff, #ff69b4, #ffffff) 1; }
+            66% { border-image: linear-gradient(to right, #ffffff, #00ffff, #ff69b4) 1; }
+            100% { border-image: linear-gradient(to right, #ff69b4, #ffffff, #00ffff) 1; }
+        }
+
 
         /* MEDIA QUERY: VERSI MOBILE (Lebar <= 600px) */
         @media screen and (max-width: 600px) {
@@ -309,7 +338,8 @@
 
             .box span:hover,
             .box span:focus-within {
-                transform: rotateY(calc(var(--i) * 36deg)) translateZ(180px); 
+                /* Perbesar SPAN dengan border dan foto ikut zoom */
+                transform: rotateY(calc(var(--i) * 36deg)) translateZ(180px) scale(1.1); 
                 border: 2px solid transparent; 
             }
 
