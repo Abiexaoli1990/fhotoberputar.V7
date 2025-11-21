@@ -22,7 +22,7 @@
             min-height: 100vh;
             background: linear-gradient(150deg, rgb(214, 240, 68), rgb(47, 147, 218));
             flex-direction: column; 
-            padding-top: 70px; /* Ruang untuk header tetap di atas */
+            padding-top: 70px; 
             padding-bottom: 50px; 
             overflow: hidden; 
             user-select: none; 
@@ -31,103 +31,98 @@
             position: relative;
         }
         
-        /* --- HEADER (JUDUL GRADIENT API GELOMBANG HALUS) --- */
+        /* --- HEADER (JUDUL GRADIENT API GELOMBANG HALUS DAN BACKGROUND ANIMASI) --- */
         #main-header {
             position: fixed; 
             top: 0; 
             width: 100%;
-            display: flex; /* Menggunakan flexbox untuk penataan logo dan teks */
-            align-items: center; /* Pusatkan vertikal */
-            justify-content: center; /* Pusatkan horizontal */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 10px 0; 
             z-index: 100; 
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             
-            /* 🌟 LATAR BELAKANG GRADIENT UNTUK JUDUL (BARU) 🌟 */
-            background-image: linear-gradient(135deg, #00c6ff, #0072ff); /* Contoh gradient biru */
-            /* Anda bisa mengubah warna gradient ini sesuai keinginan, misalnya: */
-            /* background-image: linear-gradient(45deg, #ff7e5f, #feb47b); */ /* Oranye ke peach */
-            /* background-image: linear-gradient(90deg, #a18cd1, #fbc2eb); */ /* Ungu ke pink */
+            /* 🌟 DUA BACKGROUND: 1. UNTUK TEKS (API), 2. UNTUK BACKGROUND HEADER (ANIMASI) 🌟 */
+            background-image: 
+                linear-gradient(90deg, #ff4500, #ffa500, #ffff00, #ffa500, #ff4500), /* Background 1: Gradient api gelombang (untuk teks) */
+                linear-gradient(0deg, #ff69b4, #ffffff, #00ffff); /* Background 2: Gradient untuk background header (berputar) */
+            
+            /* Animasi untuk efek api gelombang (background pertama) dan animasi background header (background kedua) */
+            animation: 
+                fireWaveAnimation 10s linear infinite,
+                headerBgRotate 3s linear infinite; 
 
+            background-size: 400% auto, 100% 100%; /* Ukuran untuk animasi teks & ukuran untuk background judul */
+            background-position: 0% center, 0% 0%; /* Posisi awal untuk animasi teks & posisi background judul */
 
-            /* Styling Teks (tetap sama) */
+            /* Styling Teks (untuk menampilkan gradient api gelombang di dalam teks) */
             font-family: sans-serif;
             font-size: 1.8rem;
             font-weight: bold;
             letter-spacing: 2px; 
             
-            /* 🌟 GRADIENT API GELOMBANG HALUS (overlay di atas background-image) 🌟 */
-            /* Properti ini mengaplikasikan gradient ke teks, bukan ke background utama */
-            background-clip: text; /* Ini adalah trik agar gradient teks terlihat */
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: transparent; /* Pastikan teks transparan */
-
-            /* Animasi untuk efek api gelombang */
-            animation: fireWaveAnimation 10s linear infinite; 
-            /* Perhatikan: Untuk efek api gelombang, kita perlu dua background. 
-               Yang satu untuk teks (fireWaveAnimation), dan yang satu untuk background judul.
-               Kita perlu membuat background-size untuk teks agar bisa dianimasikan terpisah.
-            */
-            background-size: 400% auto, 100% 100%; /* Ukuran untuk animasi teks & ukuran untuk background judul */
-            background-position: 0% center, 0% 0%; /* Posisi awal untuk animasi teks & posisi background judul */
+            color: transparent; 
         }
 
         /* Styling untuk container link logo */
         #header-logo-link {
             display: flex; 
             align-items: center;
-            justify-content: center; /* Pusatkan gambar di dalam link */
+            justify-content: center;
             margin-right: 10px; 
             text-decoration: none; 
-            width: 44px; /* Lebar dan tinggi untuk border yang sedikit lebih besar dari logo */
-            height: 44px; /* Width + 2*border-width, Height + 2*border-width */
-            border-radius: 50%; /* Menjadikan area link bulat */
-            overflow: hidden; /* Memastikan logo di dalamnya tetap bulat */
+            width: 44px; 
+            height: 44px;
+            border-radius: 50%;
+            overflow: hidden;
             
-            /* 🚀 Gradient Border Animasi untuk Logo 🚀 */
-            border: 2px solid transparent; /* Border transparan awal */
-            background-origin: border-box; /* Origin untuk background gradient */
-            background-clip: content-box, border-box; /* Clip content dan border */
-            
-            /* Default background untuk gradient border (akan diganti animasi) */
+            border: 2px solid transparent; 
+            background-origin: border-box; 
+            background-clip: content-box, border-box;
             background-image: linear-gradient(to right, #00c6ff, #0072ff); 
-            animation: rotatingGradientBorder 3s linear infinite; /* Animasi gradient */
+            animation: rotatingGradientBorder 3s linear infinite;
         }
 
         /* Keyframes untuk animasi border gradient logo */
         @keyframes rotatingGradientBorder {
-            0% { 
-                background-image: linear-gradient(0deg, #00c6ff, #92fe9d); 
-            }
-            25% { 
-                background-image: linear-gradient(90deg, #ff00c6, #ff7200); 
-            }
-            50% { 
-                background-image: linear-gradient(180deg, #ffff00, #00ff00); 
-            }
-            75% { 
-                background-image: linear-gradient(270deg, #ff0000, #8a2be2); 
-            }
-            100% { 
-                background-image: linear-gradient(360deg, #00c6ff, #92fe9d); 
-            }
+            0% { background-image: linear-gradient(0deg, #00c6ff, #92fe9d); }
+            25% { background-image: linear-gradient(90deg, #ff00c6, #ff7200); }
+            50% { background-image: linear-gradient(180deg, #ffff00, #00ff00); }
+            75% { background-image: linear-gradient(270deg, #ff0000, #8a2be2); }
+            100% { background-image: linear-gradient(360deg, #00c6ff, #92fe9d); }
         }
 
         /* Styling untuk Logo */
         #header-logo {
-            width: 40px; /* Ukuran logo */
+            width: 40px; 
             height: 40px;
             object-fit: cover; 
-            border-radius: 50%; /* Tetap membuat gambar logo bulat */
-            display: block; /* Penting untuk menghilangkan spasi di bawah gambar */
+            border-radius: 50%;
+            display: block;
         }
 
-        /* Keyframes untuk animasi api gelombang halus */
-        /* Kita perlu memodifikasi keyframes ini untuk bekerja dengan multiple background */
+        /* Keyframes untuk animasi api gelombang halus (mengatur 2 background) */
         @keyframes fireWaveAnimation {
-            0% { background-position: 0% center, 0% 0%; } /* Posisi background 1 (teks), background 2 (judul) */
-            100% { background-position: 400% center, 0% 0%; } /* Animasi hanya pada background 1 (teks) */
+            0% { background-position: 0% center, 0% 0%; } 
+            100% { background-position: 400% center, 0% 0%; }
+        }
+
+        /* 🌟 Keyframes untuk Animasi Background Header (Mengikuti Border Foto) 🌟 */
+        @keyframes headerBgRotate {
+            0% { 
+                background-image: 
+                    linear-gradient(90deg, #ff4500, #ffa500, #ffff00, #ffa500, #ff4500),
+                    linear-gradient(0deg, #ff69b4, #ffffff, #00ffff); /* Gradient header mulai 0deg */
+            }
+            100% { 
+                background-image: 
+                    linear-gradient(90deg, #ff4500, #ffa500, #ffff00, #ffa500, #ff4500),
+                    linear-gradient(360deg, #ff69b4, #ffffff, #00ffff); /* Gradient header berakhir 360deg */
+            }
         }
 
         /* --- Efek Hujan (Canvas) --- */
@@ -161,14 +156,10 @@
             transition: none;
         }
 
-        /* 🌟 Keyframes Animasi Putaran Border Saja 🌟 */
+        /* Keyframes Animasi Putaran Border Foto */
         @keyframes rotateBorderGradient {
-            0% { 
-                border-image: linear-gradient(0deg, #ff69b4, #ffffff, #00ffff) 1; 
-            }
-            100% { 
-                border-image: linear-gradient(360deg, #ff69b4, #ffffff, #00ffff) 1; 
-            }
+            0% { border-image: linear-gradient(0deg, #ff69b4, #ffffff, #00ffff) 1; }
+            100% { border-image: linear-gradient(360deg, #ff69b4, #ffffff, #00ffff) 1; }
         }
 
 
@@ -180,7 +171,6 @@
             height: 100%;
             transform-origin: center;
             transform-style: preserve-3d;
-            /* Transformasi Awal */
             transform: rotateY(calc(var(--i) * 36deg)) translateZ(360px); 
             
             -webkit-box-reflect: below 2px linear-gradient(transparent, transparent, rgba(4, 4, 4, 0.267));
@@ -197,15 +187,15 @@
             transition: transform 0.3s ease-out, box-shadow 0.2s ease-in-out, border 0.2s ease-in-out;
         }
 
-        /* 🌟 Efek Zoom Diterapkan ke SPAN (Kontainer Border + Foto) 🌟 */
-        .box span:hover {
-            /* Perbesar SPAN, ini akan memperbesar border dan foto sekaligus */
+        /* 🌟 Efek Zoom (Border + Foto) untuk Desktop/Besar 🌟 */
+        .box span:hover,
+        .box span:focus-within { /* Tambahan focus-within untuk aksesibilitas/tablet besar */
+            /* Perbesar SPAN, border dan foto ikut zoom */
             transform: rotateY(calc(var(--i) * 36deg)) translateZ(360px) scale(1.1); 
             
-            animation-play-state: running; /* Tetap putar saat hover */
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.7); /* Tambahkan shadow untuk efek */
+            animation-play-state: running;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
             border: 4px solid transparent;
-            /* Border Image saat hover (opsional, bisa sama/berbeda) */
             border-image: linear-gradient(to right, #ff0000, #ffff00, #00ff00) 1; 
             z-index: 999; 
         }
@@ -223,9 +213,7 @@
             border-radius: 0; 
             border: none;
             animation: none;
-            /* Hapus transisi zoom di sini, karena zoom sudah di kontainer span */
             transition: none; 
-            /* Pastikan gambar tidak zoom lagi saat hover di dalamnya */
             transform: scale(1); 
         }
         
@@ -324,7 +312,7 @@
 
             #header-logo-link {
                 margin-right: 8px; 
-                width: 34px; /* Sesuaikan ukuran link untuk mobile */
+                width: 34px;
                 height: 34px;
             }
 
@@ -339,15 +327,22 @@
             }
 
             .box span {
+                /* Jarak gallery dari tengah diperkecil */
                 transform: rotateY(calc(var(--i) * 36deg)) translateZ(180px); 
                 border-radius: 0; 
             }
 
+            /* 🌟 Efek Zoom (Border + Foto) untuk Mobile/Tablet 🌟 */
             .box span:hover,
             .box span:focus-within {
-                /* Perbesar SPAN dengan border dan foto ikut zoom */
+                /* Perbesar SPAN, border dan foto ikut zoom */
+                /* transform: [ROTASI] [TRANSLATE Z] [SCALE] */
                 transform: rotateY(calc(var(--i) * 36deg)) translateZ(180px) scale(1.1); 
+                
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); 
                 border: 2px solid transparent; 
+                border-image: linear-gradient(to right, #ff0000, #ffff00, #00ff00) 1; 
+                z-index: 999; 
             }
 
             .button-container {
@@ -453,7 +448,7 @@
             pauseRotation();
             startX = e.clientX;
             gallery.classList.remove('paused');
-            velocity = 0; // Hentikan momentum sebelumnya
+            velocity = 0;
         });
 
         document.addEventListener('mousemove', (e) => {
@@ -477,7 +472,6 @@
         gallery.addEventListener('touchstart', (e) => {
             isDragging = true;
             pauseRotation();
-            // Gunakan sentuhan pertama
             startX = e.touches[0].clientX;
             gallery.classList.remove('paused');
             velocity = 0;
@@ -523,26 +517,23 @@
         class Drop {
             constructor() {
                 this.reset();
-                this.z = Math.random() * 20 + 1; // Kedalaman 1-21
+                this.z = Math.random() * 20 + 1;
                 this.len = this.z;
             }
 
             reset() {
                 this.x = Math.random() * width;
-                this.y = Math.random() * height * 0.2 - 100; // Mulai di atas layar
-                this.speedY = this.z * 0.4 + 5; // Kecepatan berdasarkan kedalaman
-                this.alpha = 0.5 + Math.random() * 0.5; // Transparansi
+                this.y = Math.random() * height * 0.2 - 100;
+                this.speedY = this.z * 0.4 + 5;
+                this.alpha = 0.5 + Math.random() * 0.5;
                 this.len = this.z * 2;
                 this.vy = this.speedY; 
             }
 
             fall() {
                 this.y += this.vy;
-                
-                // Tambahkan percepatan sedikit
                 this.vy += 0.05; 
 
-                // Jika sudah melewati batas bawah, reset
                 if (this.y > height) {
                     this.reset();
                 }
@@ -560,7 +551,7 @@
 
         // Inisialisasi tetesan
         function initRain() {
-            drops.length = 0; // Bersihkan array
+            drops.length = 0;
             for (let i = 0; i < maxDrops; i++) {
                 drops.push(new Drop());
             }
