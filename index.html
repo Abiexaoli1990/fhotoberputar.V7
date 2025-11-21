@@ -40,24 +40,37 @@
             align-items: center; /* Pusatkan vertikal */
             justify-content: center; /* Pusatkan horizontal */
             padding: 10px 0; 
-            background: rgba(47, 147, 218, 0.9); /* Latar belakang semi-transparan */
             z-index: 100; 
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             
-            /* Styling Teks */
+            /* 🌟 LATAR BELAKANG GRADIENT UNTUK JUDUL (BARU) 🌟 */
+            background-image: linear-gradient(135deg, #00c6ff, #0072ff); /* Contoh gradient biru */
+            /* Anda bisa mengubah warna gradient ini sesuai keinginan, misalnya: */
+            /* background-image: linear-gradient(45deg, #ff7e5f, #feb47b); */ /* Oranye ke peach */
+            /* background-image: linear-gradient(90deg, #a18cd1, #fbc2eb); */ /* Ungu ke pink */
+
+
+            /* Styling Teks (tetap sama) */
             font-family: sans-serif;
             font-size: 1.8rem;
             font-weight: bold;
             letter-spacing: 2px; 
             
-            /* 🌟 GRADIENT API GELOMBANG HALUS 🌟 */
-            background: linear-gradient(90deg, #ff4500, #ffa500, #ffff00, #ffa500, #ff4500); 
-            background-size: 400% auto; 
+            /* 🌟 GRADIENT API GELOMBANG HALUS (overlay di atas background-image) 🌟 */
+            /* Properti ini mengaplikasikan gradient ke teks, bukan ke background utama */
+            background-clip: text; /* Ini adalah trik agar gradient teks terlihat */
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: transparent; 
+            color: transparent; /* Pastikan teks transparan */
+
+            /* Animasi untuk efek api gelombang */
             animation: fireWaveAnimation 10s linear infinite; 
+            /* Perhatikan: Untuk efek api gelombang, kita perlu dua background. 
+               Yang satu untuk teks (fireWaveAnimation), dan yang satu untuk background judul.
+               Kita perlu membuat background-size untuk teks agar bisa dianimasikan terpisah.
+            */
+            background-size: 400% auto, 100% 100%; /* Ukuran untuk animasi teks & ukuran untuk background judul */
+            background-position: 0% center, 0% 0%; /* Posisi awal untuk animasi teks & posisi background judul */
         }
 
         /* Styling untuk container link logo */
@@ -111,9 +124,10 @@
         }
 
         /* Keyframes untuk animasi api gelombang halus */
+        /* Kita perlu memodifikasi keyframes ini untuk bekerja dengan multiple background */
         @keyframes fireWaveAnimation {
-            0% { background-position: 0% center; }
-            100% { background-position: 400% center; } 
+            0% { background-position: 0% center, 0% 0%; } /* Posisi background 1 (teks), background 2 (judul) */
+            100% { background-position: 400% center, 0% 0%; } /* Animasi hanya pada background 1 (teks) */
         }
 
         /* --- Efek Hujan (Canvas) --- */
@@ -147,7 +161,7 @@
             transition: none;
         }
 
-        /* 🌟 Keyframes Animasi Putaran Border Saja (DIGUNAKAN) 🌟 */
+        /* 🌟 Keyframes Animasi Putaran Border Saja 🌟 */
         @keyframes rotateBorderGradient {
             0% { 
                 border-image: linear-gradient(0deg, #ff69b4, #ffffff, #00ffff) 1; 
@@ -214,13 +228,6 @@
             /* Pastikan gambar tidak zoom lagi saat hover di dalamnya */
             transform: scale(1); 
         }
-        
-        /* Hapus efek zoom gambar yang terpisah, karena zoom sudah di kontainer span */
-        /* .box span:hover img {
-            transform: scale(1.1);
-        } */
-
-
         
         /* --- Tombol Navigasi Bawah --- */
         .button-container {
